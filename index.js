@@ -47,10 +47,11 @@ export default class TextMarquee extends PureComponent {
   containerRef = null
 
   state = {
-    animating:    false,
-    contentFits:  true,
-    shouldBounce: false,
-    isScrolling:  false
+    animating:          false,
+    contentFits:        true,
+    shouldBounce:       false,
+    isScrolling:        false,
+    shouldBeScrolling:  false,
   }
 
   constructor(props) {
@@ -94,6 +95,8 @@ export default class TextMarquee extends PureComponent {
     // always stop timers when unmounting, common source of crash
     this.clearTimeout()
   }
+  
+  getIsScrolling = () => this.state.shouldBeScrolling
 
   makeCancelable = (promise) => {
     let cancel = () => {}
@@ -152,6 +155,7 @@ export default class TextMarquee extends PureComponent {
         }).start(({ finished }) => {
           if (finished) {
             if (onMarqueeComplete) {
+              this.setState({ shouldBeScrolling: false })
               onMarqueeComplete()
             }
             if (loop) {
@@ -205,6 +209,7 @@ export default class TextMarquee extends PureComponent {
       if (!this.state.contentFits) {
         const {onScrollStart} = this.props
         if(onScrollStart && typeof onScrollStart === "function") {
+          this.setState({ shouldBeScrolling: true })
           onScrollStart()
         }
         if (this.props.animationType === 'auto') {
