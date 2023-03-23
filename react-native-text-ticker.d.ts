@@ -30,7 +30,7 @@ declare module 'react-native-text-ticker' {
   }
 
   export interface TextTickerRef {
-    startAnimation(): void;
+    startAnimation(delay?: number): void;
     stopAnimation(): void;
     getIsScrolling(): boolean;
   }
