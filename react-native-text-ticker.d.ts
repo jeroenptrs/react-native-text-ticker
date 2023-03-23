@@ -32,6 +32,7 @@ declare module 'react-native-text-ticker' {
   export interface TextTickerRef {
     startAnimation(): void;
     stopAnimation(): void;
+    getIsScrolling(): boolean;
   }
 
   export default class TextTicker extends React.Component<TextTickerProps> { }
