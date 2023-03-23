@@ -154,8 +154,8 @@ export default class TextMarquee extends PureComponent {
           useNativeDriver: useNativeDriver
         }).start(({ finished }) => {
           if (finished) {
+            this.setState({ shouldBeScrolling: false })
             if (onMarqueeComplete) {
-              this.setState({ shouldBeScrolling: false })
               onMarqueeComplete()
             }
             if (loop) {
@@ -208,8 +208,8 @@ export default class TextMarquee extends PureComponent {
       await this.calculateMetrics()
       if (!this.state.contentFits) {
         const {onScrollStart} = this.props
+        this.setState({ shouldBeScrolling: true })
         if(onScrollStart && typeof onScrollStart === "function") {
-          this.setState({ shouldBeScrolling: true })
           onScrollStart()
         }
         if (this.props.animationType === 'auto') {
